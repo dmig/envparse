@@ -1,19 +1,17 @@
 """
 envparse is a simple utility to parse environment variables.
 """
-from __future__ import unicode_literals
 import inspect
-import json as pyjson
 import logging
 import os
 import re
 import shlex
 import warnings
+import urllib.parse as urlparse
 try:
-    import urllib.parse as urlparse
+    import ujson as pyjson
 except ImportError:
-    # Python 2
-    import urlparse
+    import json as pyjson
 
 
 __version__ = '0.2.0'
@@ -36,7 +34,7 @@ def shortcut(cast):
     return method
 
 
-class Env(object):
+class Env:
     """
     Lookup and cast environment variables with optional schema.
 
@@ -97,8 +95,8 @@ class Env(object):
             if default is NOTSET:
                 error_msg = "Environment variable '{}' not set.".format(var)
                 raise ConfigurationError(error_msg)
-            else:
-                value = default
+
+            value = default
 
         # Resolve any proxied values
         if hasattr(value, 'startswith') and value.startswith('{{'):
@@ -114,7 +112,7 @@ class Env(object):
         return value
 
     @classmethod
-    def cast(cls, value, cast=str, subcast=None):
+    def cast(cls, value, cast=str, subcast=None):  # pylint: disable=used-before-assignment
         """
         Parse and cast provided value.
 
@@ -145,7 +143,7 @@ class Env(object):
         elif cast is dict:
             value = {k.strip(): subcast(v.strip()) if subcast else v.strip()
                      for k, v in (i.split('=') for i in value.split(',') if
-                     value)}
+                                  value)}
         try:
             return cast(value)
         except ValueError as error:
@@ -207,6 +205,7 @@ class Env(object):
                 continue
             if not re.match(r'[A-Za-z_][A-Za-z_0-9]*', name):
                 continue
+
             value = value.replace(r'\n', '\n').replace(r'\t', '\t')
             os.environ.setdefault(name, value)
 

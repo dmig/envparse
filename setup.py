@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function
-from setuptools import setup, find_packages
-from setuptools.command.test import test as TestCommand
-import codecs
 import os
 import sys
 import re
+from setuptools import setup
+from setuptools.command.test import test as TestCommand
 
 
 def read(*parts):
     here = os.path.abspath(os.path.dirname(__file__))
     # intentionally *not* adding an encoding option to open
-    return codecs.open(os.path.join(here, *parts), 'r').read()
+    return open(os.path.join(here, *parts), 'r').read()
 
 
 def find_version(*file_paths):
@@ -56,9 +54,8 @@ setup(
     py_modules=['envparse'],
     platforms='any',
     zip_safe=False,
-    classifiers = [
+    classifiers=[
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
         'Development Status :: 4 - Beta',
         'Natural Language :: English',
@@ -71,5 +68,5 @@ setup(
         ],
     extras_require={
         'testing': ['pytest'],
-      }
+    }
 )

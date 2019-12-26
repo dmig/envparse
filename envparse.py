@@ -6,7 +6,6 @@ import logging
 import os
 import re
 import shlex
-import warnings
 import urllib.parse as urlparse
 try:
     import ujson as pyjson
@@ -190,7 +189,7 @@ class Env:
                 Env.read_envfile(path, **overrides)
             else:
                 # Reached top level directory.
-                warnings.warn('Could not any envfile.')
+                logger.info('Could not find any envfile.')
             return
 
         logger.debug('Reading environment variables from: %s', path)

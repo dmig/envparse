@@ -6,6 +6,8 @@ dist
 .tox
 .cache
 .eggs
+.python-version
+.vscode
 
 # coverage
 .coverage

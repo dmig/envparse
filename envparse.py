@@ -200,11 +200,11 @@ class Env:
                 continue
 
             if len(tokens) < 3:
-                raise ConfigurationError(f'Invalid syntax: {line}')
+                raise ConfigurationError('Invalid syntax: {}'.format(line))
 
             name, op = tokens[:2]
             if op != '=':
-                raise ConfigurationError(f'Invalid syntax: {line}')
+                raise ConfigurationError('Invalid syntax: {}'.format(line))
 
             value = ''.join(tokens[2:])
 

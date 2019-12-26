@@ -1,0 +1,3 @@
+[MASTER]
+max-line-length=127
+disable=missing-class-docstring,missing-function-docstring,too-many-arguments,invalid-name

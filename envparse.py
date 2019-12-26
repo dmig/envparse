@@ -101,7 +101,7 @@ class Env:
         # Resolve any proxied values
         if hasattr(value, 'startswith') and value.startswith('{{'):
             value = self.__call__(value.lstrip('{{}}'), default, cast, subcast,
-                                  default, force, preprocessor, postprocessor)
+                                  force, preprocessor, postprocessor)
 
         if preprocessor:
             value = preprocessor(value)

@@ -194,14 +194,20 @@ class Env:
 
         logger.debug('Reading environment variables from: %s', path)
         for line in content.splitlines():
-            tokens = list(shlex.shlex(line, posix=True))
             # parses the assignment statement
+            tokens = list(shlex.shlex(line, posix=True))
+            if not tokens:
+                continue
+
             if len(tokens) < 3:
-                continue
+                raise ConfigurationError(f'Invalid syntax: {line}')
+
             name, op = tokens[:2]
-            value = ''.join(tokens[2:])
             if op != '=':
-                continue
+                raise ConfigurationError(f'Invalid syntax: {line}')
+
+            value = ''.join(tokens[2:])
+
             if not re.match(r'[A-Za-z_][A-Za-z_0-9]*', name):
                 continue
 
